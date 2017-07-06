@@ -1,8 +1,10 @@
 {
   "name": "formsy-material-ui",
-  "version": "0.6.3",
+  "version": "1.0.0-alpha",
   "description": "A formsy-react compatibility wrapper for Material-UI form components.",
   "main": "./lib/index.js",
+  "module": "./src/index.jsx",
+  "jsnext:main": "./src/index.jsx",
   "scripts": {
     "build": "babel ./src -d ./lib",
     "prepublish": "npm run build",
