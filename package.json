@@ -8,6 +8,7 @@
   "scripts": {
     "build": "babel ./src -d ./lib",
     "prepublish": "npm run build",
+    "publish": "npm run build",
     "lint": "eslint --ext .jsx,.js src test && echo \"eslint: no lint errors\"",
     "test": "PHANTOMJS_BIN=$(npm bin)/phantomjs $(npm bin)/karma start --single-run",
     "test:watch": "PHANTOMJS_BIN=$(npm bin)/phantomjs $(npm bin)/karma start"
