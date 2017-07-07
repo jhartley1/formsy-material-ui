@@ -1,5 +1,5 @@
 {
-  "name": "formsy-material-ui",
+  "name": "yube-formsy-material-ui",
   "version": "1.0.0-alpha",
   "description": "A formsy-react compatibility wrapper for Material-UI form components.",
   "main": "./lib/index.js",
