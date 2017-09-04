@@ -20,3 +20,30 @@ export function debounce(fn, delay) {
     }, delay);
   };
 }
+
+export function filterHOCProps(props) {
+  /* eslint-disable */
+  const {
+    setValidations,
+    setValue,
+    resetValue,
+    getValue,
+    hasValue,
+    getErrorMessage,
+    getErrorMessages,
+    isFormDisabled,
+    isValid,
+    isPristine,
+    isFormSubmitted,
+    isRequired,
+    showRequired,
+    showError,
+    isValidValue,
+    // São props e não funcitons
+    validationError,
+    validationErrors,
+    ...rest,
+  } = props;
+  /* eslint-enable */
+  return rest;
+}
