@@ -28,7 +28,6 @@ module.exports = {
     'arrow-parens': 'error',
     'block-spacing': ['error', 'always'],
     'brace-style': 'error',
-    'comma-dangle': ['error', 'always-multiline'],
     'comma-spacing': ['error', {before: false, after: true}],
     'comma-style': ['error', 'last'],
     'computed-property-spacing': ['error', 'never'],
@@ -52,7 +51,6 @@ module.exports = {
       varsIgnorePattern: '^_',
       args: 'after-used',
       argsIgnorePattern: '^_',
-      ignoreRestSiblings: true,
     }],
     'no-shadow': 'off', // Wishlist, one day
     'no-spaced-func': 'error',
@@ -121,7 +119,6 @@ module.exports = {
     'react/react-in-jsx-scope': 'error',
     'react/self-closing-comp': 'error',
     'react/sort-comp': 'error',
-    'react/sort-prop-types': 'error',
     'react/jsx-indent': ['error', 2],
     'react/jsx-wrap-multilines': 'error',
 
