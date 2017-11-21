@@ -1,12 +1,12 @@
 import React from 'react';
 import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import Formsy from 'formsy-react';
+import Formsy, { withFormsy } from 'formsy-react';
 import Checkbox from 'material-ui/Checkbox';
 import { setMuiComponentAndMaybeFocus } from './utils';
 
-const FormsyCheckbox = createClass({
-
+class FormsyCheckbox extends React.Component { 
+/*
   propTypes: {
     defaultChecked: PropTypes.bool,
     name: PropTypes.string.isRequired,
@@ -15,19 +15,18 @@ const FormsyCheckbox = createClass({
     validationErrors: PropTypes.object,
     validations: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   },
-
-  mixins: [Formsy.Mixin],
+  */
 
   componentDidMount() {
     this.setValue(this.muiComponent.isChecked());
-  },
+  }
 
   handleChange(event, value) {
     this.setValue(value);
     if (this.props.onChange) this.props.onChange(event, value);
-  },
+  }
 
-  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus,
+  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus
 
   render() {
     const {
@@ -50,7 +49,7 @@ const FormsyCheckbox = createClass({
         ref={this.setMuiComponentAndMaybeFocus}
       />
     );
-  },
-});
+  }
+}
 
-export default FormsyCheckbox;
+export default withFormsy(FormsyCheckbox);

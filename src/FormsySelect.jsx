@@ -1,12 +1,12 @@
 import React from 'react';
 import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import Formsy from 'formsy-react';
+import Formsy, { withFormsy } from 'formsy-react';
 import SelectField from 'material-ui/SelectField';
 import { setMuiComponentAndMaybeFocus } from './utils';
 
 const FormsySelect = createClass({
-
+/*
   propTypes: {
     children: PropTypes.node,
     name: PropTypes.string.isRequired,
@@ -17,14 +17,13 @@ const FormsySelect = createClass({
     validations: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     value: PropTypes.any,
   },
-
-  mixins: [Formsy.Mixin],
+*/
 
   getInitialState() {
     return {
       hasChanged: false,
     };
-  },
+  }
 
   handleChange(event, index, value) {
     this.setValue(value);
@@ -34,9 +33,9 @@ const FormsySelect = createClass({
     });
 
     if (this.props.onChange) this.props.onChange(event, value, index);
-  },
+  }
 
-  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus,
+  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus
 
   render() {
     const {
@@ -66,7 +65,7 @@ const FormsySelect = createClass({
         {this.props.children}
       </SelectField>
     );
-  },
-});
+  }
+}
 
-export default FormsySelect;
+export default withFormsy(FormsySelect);

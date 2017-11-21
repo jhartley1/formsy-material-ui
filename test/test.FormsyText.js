@@ -1,10 +1,11 @@
 /* eslint-env mocha, jasmine */
 /* global expect */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import FormsyText from '../src/FormsyText';
 import TextField from 'material-ui/TextField';
-import { Simulate } from 'react-addons-test-utils';
+import { Simulate } from 'react-dom/test-utils';
 import { mountTestForm } from './support';
 import { Form } from 'formsy-react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';

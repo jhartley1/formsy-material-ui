@@ -1,12 +1,12 @@
 import React from 'react';
 import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import Formsy from 'formsy-react';
+import Formsy, { withFormsy } from 'formsy-react';
 import DatePicker from 'material-ui/DatePicker';
 import { setMuiComponentAndMaybeFocus } from './utils';
 
-const FormsyDate = createClass({
-
+class FormsyDate extends React.Component {
+/*
   propTypes: {
     defaultDate: PropTypes.object,
     name: PropTypes.string.isRequired,
@@ -17,8 +17,7 @@ const FormsyDate = createClass({
     validations: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     value: PropTypes.object,
   },
-
-  mixins: [Formsy.Mixin],
+*/
 
   componentDidMount() {
     const { defaultDate } = this.props;
@@ -27,7 +26,7 @@ const FormsyDate = createClass({
     if (typeof value === 'undefined' && typeof defaultDate !== 'undefined') {
       this.setValue(defaultDate);
     }
-  },
+  }
 
   componentWillReceiveProps(newProps) {
     if (newProps.value) {
@@ -50,14 +49,14 @@ const FormsyDate = createClass({
         date1.getDate() === date2.getDate() &&
         date1.getDay() === date2.getDay();
     }
-  },
+  }
 
   handleChange(event, value) {
     this.setValue(value);
     if (this.props.onChange) this.props.onChange(event, value);
-  },
+  }
 
-  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus,
+  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus
 
   render() {
     const {
@@ -80,7 +79,7 @@ const FormsyDate = createClass({
         value={this.getValue()}
       />
     );
-  },
-});
+  }
+}
 
-export default FormsyDate;
+export default withFormsy(FormsyDate);
