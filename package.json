@@ -5,7 +5,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "build": "babel ./src -d ./lib",
-    "postinstall": "postinstall-build dist \"npm run build:commonjs\"",
+    "postinstall": "postinstall-build dist \"npm run build\"",
     "prepublish": "npm run build",
     "lint": "eslint --ext .jsx,.js src test && echo \"eslint: no lint errors\"",
     "test": "PHANTOMJS_BIN=$(npm bin)/phantomjs $(npm bin)/karma start --single-run",
