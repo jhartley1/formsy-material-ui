@@ -56,7 +56,7 @@ class FormsyAutoComplete extends React.Component {
     if (this.props.onKeyDown) this.props.onKeyDown(event, event.currentTarget.value);
   }
 
-  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus
+  //setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus
 
   render() {
     const {
