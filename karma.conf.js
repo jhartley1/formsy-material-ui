@@ -1,5 +1,7 @@
 var webpack = require('webpack')
 
+process.env.CHROME_BIN = require('puppeteer').executablePath();
+
 module.exports = function (config) {
   if (process.env.TRAVIS) {
     config.set({
@@ -9,7 +11,7 @@ module.exports = function (config) {
     })
   } else {
     config.set({
-      browsers: [ 'Chrome' ],
+      browsers: [ 'ChromeHeadless' ],
       frameworks: [ 'mocha', 'chai', 'sinon' ]
     })
   }

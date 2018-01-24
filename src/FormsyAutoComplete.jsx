@@ -1,10 +1,8 @@
 import React from 'react';
-import createClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import keycode from 'keycode';
 import Formsy, { withFormsy } from 'formsy-react';
 import AutoComplete from 'material-ui/AutoComplete';
-import { setMuiComponentAndMaybeFocus } from 'formsy-react/src/utils';
+import { setMuiComponentAndMaybeFocus } from './utils';
 
 class FormsyAutoComplete extends React.Component {
 /*
@@ -56,7 +54,7 @@ class FormsyAutoComplete extends React.Component {
     if (this.props.onKeyDown) this.props.onKeyDown(event, event.currentTarget.value);
   }
 
-  //setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus
+  setMuiComponentAndMaybeFocus = setMuiComponentAndMaybeFocus
 
   render() {
     const {

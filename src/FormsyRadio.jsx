@@ -1,5 +1,4 @@
 import React from 'react'
-import createClass from 'create-react-class';
 import Formsy, { withFormsy } from 'formsy-react';
 
 class FormsyRadio extends React.Component {

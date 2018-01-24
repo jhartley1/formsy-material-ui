@@ -1,22 +1,20 @@
 {
-  "name": "formsy-material-ui",
-  "version": "1.0.0-alpha.2",
+  "name": "formsy-material-ui-jhartley1",
+  "version": "1.0.0-alpha.8",
   "description": "A formsy-react compatibility wrapper for Material-UI form components.",
   "main": "./lib/index.js",
   "module": "./src/index.jsx",
   "jsnext:main": "./src/index.jsx",
   "scripts": {
     "build": "babel ./src -d ./lib",
-    "postinstall": "postinstall-build dist \"npm run build\"",
-    "prepublish": "npm run build",
-    "publish": "npm run build",
+    "prepare": "npm run build",
     "lint": "eslint --ext .jsx,.js src test && echo \"eslint: no lint errors\"",
     "test": "PHANTOMJS_BIN=$(npm bin)/phantomjs $(npm bin)/karma start --single-run",
     "test:watch": "PHANTOMJS_BIN=$(npm bin)/phantomjs $(npm bin)/karma start"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mbrookes/formsy-material-ui.git"
+    "url": "git+https://github.com/jhartley1/formsy-material-ui.git"
   },
   "files": [
     "lib",
@@ -64,10 +62,11 @@
     "karma-sinon": "^1.0.4",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.4",
-    "material-ui": "1.0.0-beta.4",
+    "material-ui": "1.0.0-beta.17",
     "mocha": "^3.4.2",
     "phantomjs-prebuilt": "^2.1.4",
     "prop-types": "^15.6.0",
+    "puppeteer": "^1.0.0",
     "react": "^16.1.1",
     "react-addons-test-utils": "^15.6.0",
     "react-dom": "^16.1.1",

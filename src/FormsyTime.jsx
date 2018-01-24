@@ -1,6 +1,4 @@
 import React from 'react';
-import createClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import Formsy, { withFormsy } from 'formsy-react';
 import TimePicker from 'material-ui/TimePicker';
 import { setMuiComponentAndMaybeFocus } from './utils';
@@ -54,7 +52,7 @@ class FormsyTime extends React.Component {
     if (this.props.onChange) this.props.onChange(event, value);
   }
 
-  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus
+  setMuiComponentAndMaybeFocus = setMuiComponentAndMaybeFocus
 
   render() {
     const {

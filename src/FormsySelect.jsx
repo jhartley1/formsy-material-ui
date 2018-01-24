@@ -1,6 +1,4 @@
 import React from 'react';
-import createClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import Formsy, { withFormsy } from 'formsy-react';
 import SelectField from 'material-ui/SelectField';
 import { setMuiComponentAndMaybeFocus } from './utils';

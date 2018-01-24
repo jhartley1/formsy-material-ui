@@ -1,6 +1,4 @@
 import React from 'react';
-import createClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import Formsy, { withFormsy } from 'formsy-react';
 import Checkbox from 'material-ui/Checkbox';
 import { setMuiComponentAndMaybeFocus } from './utils';
@@ -26,7 +24,7 @@ class FormsyCheckbox extends React.Component {
     if (this.props.onChange) this.props.onChange(event, value);
   }
 
-  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus
+  setMuiComponentAndMaybeFocus = setMuiComponentAndMaybeFocus
 
   render() {
     const {

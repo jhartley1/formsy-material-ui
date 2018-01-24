@@ -1,12 +1,12 @@
+
+/*
 import React from 'react';
 import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Formsy, { withFormsy } from 'formsy-react';
 import { RadioButtonGroup, RadioButton } from 'material-ui/RadioButton';
 import { setMuiComponentAndMaybeFocus } from './utils';
-
 class FormsyRadioGroup extends React.Component {
-/*
   propTypes: {
     children: PropTypes.node,
     defaultSelected: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
@@ -17,7 +17,6 @@ class FormsyRadioGroup extends React.Component {
     validations: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   },
-  */
 
   componentDidMount() {
     this.setValue(this.muiComponent.getSelectedValue());
@@ -28,7 +27,7 @@ class FormsyRadioGroup extends React.Component {
     if (this.props.onChange) this.props.onChange(event, value);
   }
 
-  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus
+  setMuiComponentAndMaybeFocus = setMuiComponentAndMaybeFocus
 
   render() {
     let {
@@ -74,3 +73,4 @@ class FormsyRadioGroup extends React.Component {
 }
 
 export default withFormsy(FormsyRadioGroup);
+*/
