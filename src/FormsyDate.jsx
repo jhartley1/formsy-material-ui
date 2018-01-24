@@ -16,6 +16,9 @@ class FormsyDate extends React.Component {
     value: PropTypes.object,
   },
 */
+  setValue(val) {
+    this.props.setValue(val);
+  }
 
   componentDidMount() {
     const { defaultDate } = this.props;

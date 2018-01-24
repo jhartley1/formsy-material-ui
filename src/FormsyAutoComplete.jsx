@@ -20,6 +20,10 @@ class FormsyAutoComplete extends React.Component {
   },
 */
 
+  setValue(val) {
+    this.props.setValue(val);
+  }
+
   getInitialState() {
     return {
       value: this.props.defaultValue || this.props.value || '',

@@ -15,36 +15,43 @@ class FormsyCheckbox extends React.Component {
   },
   */
 
-  componentDidMount() {
-    this.setValue(this.muiComponent.isChecked());
+
+  handleChange = (event, value) => {
+    this.props.setValue(value);
   }
 
-  handleChange(event, value) {
-    this.setValue(value);
-    if (this.props.onChange) this.props.onChange(event, value);
-  }
-
-  setMuiComponentAndMaybeFocus = setMuiComponentAndMaybeFocus
-
-  render() {
+  render = () => {
     const {
-      defaultChecked, // eslint-disable-line no-unused-vars
+      errorText,
+      getErrorMessage,
+      getErrorMessages,
+      getValue,
+      value,
+      required,
+      hasValue,
+      hintText,
+      isValid,
+      isValidValue,
+      isPristine,
+      isRequired,
+      isFormDisabled,
+      isFormSubmitted,
+      resetValue,
+      setValidations,
+      setValue,
+      showError,
+      showRequired,
       validations, // eslint-disable-line no-unused-vars
-      validationErrors, // eslint-disable-line no-unused-vars
       validationError, // eslint-disable-line no-unused-vars
+      validationErrors, // eslint-disable-line no-unused-vars
       ...rest } = this.props;
-    let value = this.getValue();
 
-    if (typeof value === 'undefined') {
-      value = (typeof defaultChecked !== 'undefined') ? defaultChecked : false;
-    }
     return (
       <Checkbox
-        disabled={this.isFormDisabled()}
+        disabled={isFormDisabled()}
         {...rest}
-        checked={value}
-        onCheck={this.handleChange}
-        ref={this.setMuiComponentAndMaybeFocus}
+        checked={getValue()}
+        onChange={this.handleChange}
       />
     );
   }

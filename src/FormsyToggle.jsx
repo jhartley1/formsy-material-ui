@@ -1,6 +1,6 @@
 import React from 'react';
 import Formsy, { withFormsy } from 'formsy-react';
-import Toggle from 'material-ui/Toggle';
+import Switch from 'material-ui/Switch';
 import { setMuiComponentAndMaybeFocus } from './utils';
 
 class FormsyToggle extends React.Component {
@@ -15,38 +15,42 @@ class FormsyToggle extends React.Component {
   },
 */
 
-  componentDidMount() {
-    this.setValue(this.muiComponent.isToggled());
+  handleChange = (event, value) => {
+    this.props.setValue(value);
   }
 
-  handleChange(event, value) {
-    this.setValue(value);
-    if (this.props.onChange) this.props.onChange(event, value);
-  }
-
-  setMuiComponentAndMaybeFocus = setMuiComponentAndMaybeFocus
-
-  render() {
+  render = () => {
     const {
-      defaultToggled,
+      errorText,
+      getErrorMessage,
+      getErrorMessages,
+      getValue,
+      value,
+      required,
+      hasValue,
+      hintText,
+      isValid,
+      isValidValue,
+      isPristine,
+      isRequired,
+      isFormDisabled,
+      isFormSubmitted,
+      resetValue,
+      setValidations,
+      setValue,
+      showError,
+      showRequired,
       validations, // eslint-disable-line no-unused-vars
       validationError, // eslint-disable-line no-unused-vars
       validationErrors, // eslint-disable-line no-unused-vars
       ...rest } = this.props;
 
-    let value = this.getValue();
-
-    if (typeof value === 'undefined') {
-      value = (typeof defaultToggled !== 'undefined') ? defaultToggled : false;
-    }
-
     return (
-      <Toggle
-        disabled={this.isFormDisabled()}
+      <Switch
+        disabled={isFormDisabled()}
         {...rest}
-        onToggle={this.handleChange}
-        ref={this.setMuiComponentAndMaybeFocus}
-        toggled={value}
+        onChange={this.handleChange}
+        checked={getValue()}
       />
     );
   }
