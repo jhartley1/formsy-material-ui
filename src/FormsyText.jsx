@@ -1,69 +1,58 @@
 import React from 'react';
+import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import keycode from 'keycode';
-import { HOC } from 'formsy-react';
-import MUITextField from 'material-ui/TextField';
-import { debounce, filterHOCProps } from './utils';
+import Formsy, { withFormsy } from 'formsy-react';
+import TextField from 'material-ui/TextField';
+import { setMuiComponentAndMaybeFocus, debounce } from './utils';
 
 class FormsyText extends React.Component {
-  static displayName = 'formsyMUI(FormsyText)';
-
-  static propTypes = {
-    FormHelperTextProps: PropTypes.object,
-    convertValue       : PropTypes.func,
-    defaultValue       : PropTypes.any,
-    name               : PropTypes.string.isRequired,
-    onBlur             : PropTypes.func,
-    onChange           : PropTypes.func,
-    onKeyDown          : PropTypes.func,
-    requiredError      : PropTypes.string,
-    updateImmediately  : PropTypes.bool,
-    validations        : PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    value              : PropTypes.any,
-
-    // Formsy HOC
-    setValue        : PropTypes.func.isRequired,
-    resetValue      : PropTypes.func.isRequired,
-    getValue        : PropTypes.func.isRequired,
-    hasValue        : PropTypes.func.isRequired,
-    getErrorMessage : PropTypes.func.isRequired,
-    getErrorMessages: PropTypes.func.isRequired,
-    isFormDisabled  : PropTypes.func.isRequired,
-    isValid         : PropTypes.func.isRequired,
-    isPristine      : PropTypes.func.isRequired,
-    isFormSubmitted : PropTypes.func.isRequired,
-    isRequired      : PropTypes.func.isRequired,
-    showRequired    : PropTypes.func.isRequired,
-    showError       : PropTypes.func.isRequired,
-    isValidValue    : PropTypes.func.isRequired,
-    validationError : PropTypes.string,
+/*
+  propTypes: {
+    convertValue: PropTypes.func,
+    defaultValue: PropTypes.any,
+    name: PropTypes.string.isRequired,
+    onBlur: PropTypes.func,
+    onChange: PropTypes.func,
+    onKeyDown: PropTypes.func,
+    requiredError: PropTypes.string,
+    underlineFocusStyle: PropTypes.object,
+    underlineStyle: PropTypes.object,
+    updateImmediately: PropTypes.bool,
+    validationColor: PropTypes.string,
+    validationError: PropTypes.string,
     validationErrors: PropTypes.object,
-  };
+    validations: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    value: PropTypes.any,
+  },
+*/
 
-  static defaultProps = {
-    onChange : () => {},
-    onKeyDown: () => {},
-  };
+  getDefaultProps() {
+    return {
+      underlineFocusStyle: {},
+      underlineStyle: {},
+      validationColor: '#4CAF50',
+    };
+  }
 
-  constructor(props) {
-    super(props);
+  getInitialState() {
     const value = this.controlledValue();
-    this.state = { value };
+    return { value };
   }
 
   componentWillMount() {
-    this.props.setValue(this.controlledValue());
+    this.setValue(this.controlledValue());
   }
 
   componentWillReceiveProps(nextProps) {
     const isValueChanging = nextProps.value !== this.props.value;
     if (isValueChanging || nextProps.defaultValue !== this.props.defaultValue) {
       const value = this.controlledValue(nextProps);
-      const isValid = this.props.isValidValue(value);
+      const isValid = this.isValidValue(value);
 
-      if (isValueChanging || this.props.defaultValue === this.props.getValue()) {
+      if (isValueChanging || this.props.defaultValue === this.getValue()) {
         this.setState({ value, isValid });
-        if (this.props.getValue() !== value) this.props.setValue(value);
+        if (this.getValue() !== value) this.setValue(value);
       }
     }
   }
@@ -73,9 +62,8 @@ class FormsyText extends React.Component {
       nextState._isPristine !== this.state._isPristine) { // eslint-disable-line no-underscore-dangle
       // Calling state here is valid, as it cannot cause infinite recursion.
       const value = this.controlledValue(nextProps);
-      const isValid = this.props.isValidValue(value);
-
-      this.props.setValue(value);
+      const isValid = this.isValidValue(value);
+      this.setValue(value);
       this.setState({ value, isValid });
     }
   }
@@ -84,59 +72,43 @@ class FormsyText extends React.Component {
     return props.value || props.defaultValue || this.convertValue('');
   }
 
-  handleBlur = (event) => {
-    this.props.setValue(this.convertValue(event.target.value));
-
+  handleBlur(event) {
+    this.setValue(this.convertValue(event.currentTarget.value));
     delete this.changeValue;
     if (this.props.onBlur) this.props.onBlur(event);
   }
 
-  handleChange = (event) => {
-    event.persist();
-    const { value } = event.target;
-    const { updateImmediately } = this.props;
-
+  handleChange(event) {
     // Update the value (and so display any error) after a timeout.
-    if (updateImmediately) {
+    if (this.props.updateImmediately) {
       if (!this.changeValue) {
-        this.changeValue = debounce(this.props.setValue, 400);
+        this.changeValue = debounce(this.setValue, 400);
       }
-      this.changeValue(this.convertValue(value));
+      this.changeValue(this.convertValue(event.currentTarget.value));
     } else {
       // If there was an error (on loss of focus) update on each keypress to resolve same.
-      if (this.props.getErrorMessage() != null) {
-        this.props.setValue(this.convertValue(value));
+      if (this.getErrorMessage() != null) {
+        this.setValue(this.convertValue(event.currentTarget.value));
       } else {
         // Only update on valid values, so as to not generate an error until focus is lost.
-        if (this.props.isValidValue(value)) {
-          this.props.setValue(this.convertValue(value));
+        if (this.isValidValue(event.target.value)) {
+          this.setValue(this.convertValue(event.currentTarget.value));
           // If it becomes invalid, and there isn't an error message, invalidate without error.
         }
       }
     }
 
     // Controlled component
-    this.setState({
-      value,
-      isValid: this.props.isValidValue(value),
-    });
-
-    if (this.props.onChange) {
-      this.props.onChange(event, event.target.value);
-    }
+    this.setState({ value: event.currentTarget.value, isValid: this.isValidValue(event.currentTarget.value) });
+    if (this.props.onChange) this.props.onChange(event, event.currentTarget.value);
   }
 
-  handleKeyDown = (event) => {
-    if (keycode(event) === 'enter') {
-      this.props.setValue(this.convertValue(event.target.value));
-    }
-
-    if (this.props.onKeyDown) {
-      this.props.onKeyDown(event, event.target.value);
-    }
+  handleKeyDown(event) {
+    if (keycode(event) === 'enter') this.setValue(this.convertValue(event.currentTarget.value));
+    if (this.props.onKeyDown) this.props.onKeyDown(event, event.currentTarget.value);
   }
 
-  convertValue = (value) => {
+  convertValue(value) {
     if (this.props.convertValue) {
       return this.props.convertValue(value);
     } else {
@@ -144,58 +116,42 @@ class FormsyText extends React.Component {
     }
   }
 
-  isRequiredError() {
-    const { isRequired, isPristine, isValid, isFormSubmitted } = this.props;
-    const { requiredError } = this.props;
-
-    return isRequired() &&
-           !isPristine() &&
-           !isValid() &&
-           isFormSubmitted() &&
-           requiredError;
-  }
+  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus
 
   render() {
     const {
-      defaultValue     : _defaultValue,
-      convertValue     : _convertValue,
-      requiredError    : _requiredError,
-      updateImmediately: _updateImmediately,
-      validations      : _validations,
-      value            : _value,
-      isFormDisabled   : isFormDisabled,
-      FormHelperTextProps,
-      ...rest,
-    } = this.props;
+      defaultValue, // eslint-disable-line no-unused-vars
+      convertValue, // eslint-disable-line no-unused-vars
+      requiredError,
+      underlineFocusStyle,
+      underlineStyle,
+      updateImmediately, // eslint-disable-line no-unused-vars
+      validations, // eslint-disable-line no-unused-vars
+      validationError, // eslint-disable-line no-unused-vars
+      validationErrors, // eslint-disable-line no-unused-vars
+      value, // eslint-disable-line no-unused-vars
+      validationColor,
+      ...rest } = this.props;
 
-    const {
-      value,
-      isValid,
-    } = this.state;
-
-    const helperText = this.props.getErrorMessage() || this.isRequiredError();
-    const error     = (isValid === false || Boolean(this.isRequiredError()));
-
-    const helperProps = {
-      ...FormHelperTextProps,
-      error,
-    };
-    const extraProps = filterHOCProps(rest);
+    const { isRequired, isPristine, isValid, isFormSubmitted } = this;
+    const isRequiredError = isRequired() && !isPristine() && !isValid() && isFormSubmitted() && requiredError;
+    const errorText = this.getErrorMessage() || isRequiredError;
 
     return (
-      <MUITextField
-        disabled={isFormDisabled()}
-        {...extraProps}
+      <TextField
+        disabled={this.isFormDisabled()}
+        {...rest}
+        errorText={errorText}
         onBlur={this.handleBlur}
         onChange={this.handleChange}
         onKeyDown={this.handleKeyDown}
-        value={value}
-        error={error}
-        helperText={helperText}
-        FormHelperTextProps={helperProps}
+        ref={this.setMuiComponentAndMaybeFocus}
+        value={this.state.value}
+        underlineStyle={this.state.isValid ? { borderColor: validationColor } : underlineStyle}
+        underlineFocusStyle={this.state.isValid ? { borderColor: validationColor } : underlineFocusStyle}
       />
     );
   }
 }
 
-export default HOC(FormsyText);
+export default withFormsy(FormsyText);

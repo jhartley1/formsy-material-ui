@@ -2,12 +2,12 @@ import React from 'react';
 import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import keycode from 'keycode';
-import Formsy from 'formsy-react';
+import Formsy, { withFormsy } from 'formsy-react';
 import AutoComplete from 'material-ui/AutoComplete';
 import { setMuiComponentAndMaybeFocus } from 'formsy-react/src/utils';
 
-const FormsyAutoComplete = createClass({
-
+class FormsyAutoComplete extends React.Component {
+/*
   propTypes: {
     defaultValue: PropTypes.any,
     name: PropTypes.string.isRequired,
@@ -20,44 +20,43 @@ const FormsyAutoComplete = createClass({
     validations: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     value: PropTypes.any,
   },
-
-  mixins: [Formsy.Mixin],
+*/
 
   getInitialState() {
     return {
       value: this.props.defaultValue || this.props.value || '',
     };
-  },
+  }
 
   componentWillMount() {
     this.setValue(this.props.defaultValue || this.props.value || '');
-  },
+  }
 
-  handleBlur: function handleBlur(event) {
+  handleBlur(event) {
     this.setValue(event.currentTarget.value);
     if (this.props.onBlur) this.props.onBlur(event);
-  },
+  }
 
-  handleChange: function handleChange(event) {
+  handleChange(event) {
     this.setState({
       value: event.currentTarget.value,
     });
     if (this.props.onChange) this.props.onChange(event);
-  },
+  }
 
-  handleUpdateInput: function handleUpdateInput(value) {
+  handleUpdateInput(value) {
     this.setState({
       value,
     });
     if (this.props.onChange) this.props.onChange(null, value);
-  },
+  }
 
-  handleKeyDown: function handleKeyDown(event) {
+  handleKeyDown(event) {
     if (keycode(event) === 'enter') this.setValue(event.currentTarget.value);
     if (this.props.onKeyDown) this.props.onKeyDown(event, event.currentTarget.value);
-  },
+  }
 
-  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus,
+  //setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus
 
   render() {
     const {
@@ -82,7 +81,7 @@ const FormsyAutoComplete = createClass({
         value={this.state.value}
       />
     );
-  },
-});
+  }
+}
 
-export default FormsyAutoComplete;
+export default withFormsy(FormsyAutoComplete);
