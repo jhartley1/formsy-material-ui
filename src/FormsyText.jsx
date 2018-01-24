@@ -27,7 +27,6 @@ class FormsyText extends React.Component {
     this.setState({
       value: getValue()
     });
-
   }
 
   handleChange = (event) => {
